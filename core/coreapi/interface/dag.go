@@ -14,7 +14,7 @@ type DagAPI interface {
 	// Put inserts data using specified format and input encoding.
 	// Unless used with WithCodec or WithHash, the defaults "dag-cbor" and
 	// "sha256" are used.
-	Put(ctx context.Context, src io.Reader, opts ...options.DagPutOption) (Path, error)
+	Put(ctx context.Context, src io.Reader, opts ...options.DagPutOption) (ResolvedPath, error)
 
 	// WithInputEnc is an option for Put which specifies the input encoding of the
 	// data. Default is "json", most formats/codecs support "raw"

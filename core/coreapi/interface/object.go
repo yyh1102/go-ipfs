@@ -46,7 +46,7 @@ type ObjectAPI interface {
 	WithType(string) options.ObjectNewOption
 
 	// Put imports the data into merkledag
-	Put(context.Context, io.Reader, ...options.ObjectPutOption) (Path, error)
+	Put(context.Context, io.Reader, ...options.ObjectPutOption) (ResolvedPath, error)
 
 	// WithInputEnc is an option for Put which specifies the input encoding of the
 	// data. Default is "json".
@@ -79,18 +79,18 @@ type ObjectAPI interface {
 	// AddLink adds a link under the specified path. child path can point to a
 	// subdirectory within the patent which must be present (can be overridden
 	// with WithCreate option).
-	AddLink(ctx context.Context, base Path, name string, child Path, opts ...options.ObjectAddLinkOption) (Path, error)
+	AddLink(ctx context.Context, base Path, name string, child Path, opts ...options.ObjectAddLinkOption) (ResolvedPath, error)
 
 	// WithCreate is an option for AddLink which specifies whether create required
 	// directories for the child
 	WithCreate(create bool) options.ObjectAddLinkOption
 
 	// RmLink removes a link from the node
-	RmLink(ctx context.Context, base Path, link string) (Path, error)
+	RmLink(ctx context.Context, base Path, link string) (ResolvedPath, error)
 
 	// AppendData appends data to the node
-	AppendData(context.Context, Path, io.Reader) (Path, error)
+	AppendData(context.Context, Path, io.Reader) (ResolvedPath, error)
 
 	// SetData sets the data contained in the node
-	SetData(context.Context, Path, io.Reader) (Path, error)
+	SetData(context.Context, Path, io.Reader) (ResolvedPath, error)
 }
