@@ -5,12 +5,12 @@ import (
 	"time"
 
 	pb "github.com/ipfs/go-ipfs/namesys/pb"
-	pstore "gx/ipfs/QmXauCuJzmzapetmC6W4TuDJLL1yFFrVzSHoWv8YdbmnxH/go-libp2p-peerstore"
+	pstore "gx/ipfs/QmT1hUXbRnjpWxGWAuRXUiVeyU5yrA7HNFieUBqUDcfgYm/go-libp2p-peerstore"
 	peer "gx/ipfs/QmZoWKhxUmZ2seW4BzX6fJkNR8hh9PsGModr7q171yq2SS/go-libp2p-peer"
 
 	u "gx/ipfs/QmNiJuT8Ja3hMVpBHXv3Q6dwmperaQ6JjLtpMQgMCD7xvx/go-ipfs-util"
-	record "gx/ipfs/QmUpttFinNDmNPgFwKN8sZK6BUtBmA68Y4KdSBDXa8t9sJ/go-libp2p-record"
 	proto "gx/ipfs/QmZ4Qi3GaRbjcx28Sme5eMH7RQjGkt8wHxt2a65oLaeFEV/gogo-protobuf/proto"
+	record "gx/ipfs/QmcBSi3Zxa6ytDQxig2iMv4VMfiKKy7v4tibi1Sq6Z5u2x/go-libp2p-record"
 )
 
 // ErrExpiredRecord should be returned when an ipns record is
@@ -46,11 +46,11 @@ var ErrPublicKeyNotFound = errors.New("public key not found in peer store")
 // to verify the record's signature. Note that the public key must
 // already have been fetched from the network and put into the KeyBook
 // by the caller.
-func NewIpnsRecordValidator(kbook pstore.KeyBook) *record.ValidChecker {
+func NewIpnsRecordValidator(kbook pstore.KeyBook) record.ValidatorFunc {
 	// ValidateIpnsRecord implements ValidatorFunc and verifies that the
 	// given record's value is an IpnsEntry, that the entry has been correctly
 	// signed, and that the entry has not expired
-	ValidateIpnsRecord := func(r *record.ValidationRecord) error {
+	return func(r *record.ValidationRecord) error {
 		if r.Namespace != "ipns" {
 			return ErrInvalidPath
 		}
@@ -95,10 +95,5 @@ func NewIpnsRecordValidator(kbook pstore.KeyBook) *record.ValidChecker {
 			return ErrUnrecognizedValidity
 		}
 		return nil
-	}
-
-	return &record.ValidChecker{
-		Func: ValidateIpnsRecord,
-		Sign: false,
 	}
 }

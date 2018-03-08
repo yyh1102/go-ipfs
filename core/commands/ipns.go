@@ -9,7 +9,7 @@ import (
 	e "github.com/ipfs/go-ipfs/core/commands/e"
 	namesys "github.com/ipfs/go-ipfs/namesys"
 
-	offline "gx/ipfs/QmZRcGYvxdauCd7hHnMYLYqcZRaDjv24c7eUNyJojAcdBb/go-ipfs-routing/offline"
+	offline "gx/ipfs/QmYWUgR4in6E2ooANpHQDYejuoWvVCLe8sCtuTaCPhgvhP/go-ipfs-routing/offline"
 	"gx/ipfs/QmceUdzxkimdYsgtX733uNgzf1DLHyBKN6ehGSp85ayppM/go-ipfs-cmdkit"
 )
 

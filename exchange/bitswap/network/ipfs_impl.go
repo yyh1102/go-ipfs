@@ -8,16 +8,16 @@ import (
 
 	bsmsg "github.com/ipfs/go-ipfs/exchange/bitswap/message"
 
-	host "gx/ipfs/QmNmJZL7FQySMtE2BQuLMuZg2EB2CLEunJJUSVSc9YnnbV/go-libp2p-host"
 	logging "gx/ipfs/QmRb5jh8z2E8hMGN2tkvs1yHynUanqnZ3UeKwgN1i9P1F8/go-log"
-	routing "gx/ipfs/QmTiWLZ6Fo5j4KcTVutZJ5KWRRJrbxzmxA4td8NfEdrPh7/go-libp2p-routing"
+	pstore "gx/ipfs/QmT1hUXbRnjpWxGWAuRXUiVeyU5yrA7HNFieUBqUDcfgYm/go-libp2p-peerstore"
+	routing "gx/ipfs/QmUJLD689v9n9hi1jtXkMgTYji5qpEGBsiMCYDFWbWWCFa/go-libp2p-routing"
 	ma "gx/ipfs/QmWWQ2Txc2c6tqjsBpzg5Ar652cHPGNsQQp2SejkNmkUMb/go-multiaddr"
-	pstore "gx/ipfs/QmXauCuJzmzapetmC6W4TuDJLL1yFFrVzSHoWv8YdbmnxH/go-libp2p-peerstore"
-	inet "gx/ipfs/QmXfkENeeBvh3zYA51MaSdGUdBjhQ99cP5WQe8zgr6wchG/go-libp2p-net"
 	ggio "gx/ipfs/QmZ4Qi3GaRbjcx28Sme5eMH7RQjGkt8wHxt2a65oLaeFEV/gogo-protobuf/io"
+	host "gx/ipfs/QmZLmWTC8eS1LojwosxjZpyDJtuTZx9bUVb2ZWmCm7hkT5/go-libp2p-host"
 	peer "gx/ipfs/QmZoWKhxUmZ2seW4BzX6fJkNR8hh9PsGModr7q171yq2SS/go-libp2p-peer"
-	ifconnmgr "gx/ipfs/Qmax8X1Kfahf5WfSB68EWDG3d3qyS3Sqs1v412fjPTfRwx/go-libp2p-interface-connmgr"
+	ifconnmgr "gx/ipfs/QmbCz4MES7ZVufGCxTbRGZgByjRasmLV9yDSGR2sifmxK2/go-libp2p-interface-connmgr"
 	cid "gx/ipfs/QmcZfnkapfECQGcLZaf9B79NRg7cRa9EnZh4LSbkCzwNvY/go-cid"
+	inet "gx/ipfs/Qmd6xURKh4mVXftPU4XBjtLoihHXV2K2bS2VDYhPwTp4E6/go-libp2p-net"
 )
 
 var log = logging.Logger("bitswap_network")
@@ -54,7 +54,7 @@ type streamMessageSender struct {
 }
 
 func (s *streamMessageSender) Close() error {
-	return s.s.Close()
+	return inet.FullClose(s.s)
 }
 
 func (s *streamMessageSender) Reset() error {
@@ -119,13 +119,13 @@ func (bsnet *impl) SendMessage(
 		return err
 	}
 
-	err = msgToStream(ctx, s, outgoing)
-	if err != nil {
+	if err = msgToStream(ctx, s, outgoing); err != nil {
 		s.Reset()
-	} else {
-		s.Close()
+		return err
 	}
-	return err
+	// Yes, return this error. We have no reason to believe that the block
+	// was actually *sent* unless we see the EOF.
+	return inet.FullClose(s)
 }
 
 func (bsnet *impl) SetDelegate(r Receiver) {
