@@ -44,7 +44,7 @@ type BuildCfg struct {
 	// that will improve performance in long run
 	Permanent bool
 
-	// DisableEncryptedConnections disables connection encryption *entierly*.
+	// DisableEncryptedConnections disables connection encryption *entirely*.
 	// DO NOT SET THIS UNLESS YOU'RE TESTING.
 	DisableEncryptedConnections bool
 
