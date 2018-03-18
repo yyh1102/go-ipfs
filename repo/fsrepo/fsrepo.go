@@ -46,7 +46,7 @@ See https://github.com/ipfs/fs-repo-migrations/blob/master/run.md for details.`
 var (
 	ErrNoVersion     = errors.New("no version file found, please run 0-to-1 migration tool.\n" + migrationInstructions)
 	ErrOldRepo       = errors.New("ipfs repo found in old '~/.go-ipfs' location, please run migration tool.\n" + migrationInstructions)
-	ErrNeedMigration = errors.New("ipfs repo needs migration.")
+	ErrNeedMigration = errors.New("ipfs repo needs migration")
 )
 
 type NoRepoError struct {
@@ -400,7 +400,7 @@ func (r *FSRepo) openDatastore() error {
 		return err
 	}
 	if oldSpec != spec.String() {
-		return fmt.Errorf("Datastore configuration of '%s' does not match what is on disk '%s'",
+		return fmt.Errorf("datastore configuration of '%s' does not match what is on disk '%s'",
 			oldSpec, spec.String())
 	}
 
@@ -622,7 +622,7 @@ func (r *FSRepo) SetConfigKey(key string, value interface{}) error {
 			value = value
 		}
 		if !ok {
-			return fmt.Errorf("Wrong config type, expected %T", oldValue)
+			return fmt.Errorf("wrong config type, expected %T", oldValue)
 		}
 	}
 

@@ -79,7 +79,7 @@ environment variable:
 		res.SetOutput(nil)
 
 		if req.InvocContext().Online {
-			res.SetError(errors.New("init must be run offline only!"), cmdkit.ErrNormal)
+			res.SetError(errors.New("init must be run offline only"), cmdkit.ErrNormal)
 			return
 		}
 

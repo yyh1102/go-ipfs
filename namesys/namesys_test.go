@@ -23,7 +23,7 @@ func testResolution(t *testing.T, resolver Resolver, name string, depth int, exp
 	p, err := resolver.ResolveN(context.Background(), name, depth)
 	if err != expError {
 		t.Fatal(fmt.Errorf(
-			"Expected %s with a depth of %d to have a '%s' error, but got '%s'",
+			"expected %s with a depth of %d to have a '%s' error, but got '%s'",
 			name, depth, expError, err))
 	}
 	if p.String() != expected {
