@@ -24,7 +24,7 @@ import (
 	pb "gx/ipfs/QmeWjRodbcZFKe5tMN7poEx3izym6osrLSnTLf9UjJZBbs/pb"
 )
 
-// ErrDepthLimitExceeded indicates that the max depth has been exceded.
+// ErrDepthLimitExceeded indicates that the max depth has been exceeded.
 var ErrDepthLimitExceeded = fmt.Errorf("depth limit exceeded")
 
 const (

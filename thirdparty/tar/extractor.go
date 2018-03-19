@@ -61,7 +61,7 @@ func (te *Extractor) Extract(reader io.Reader) error {
 	return nil
 }
 
-// outputPath returns the path at whicht o place tarPath
+// outputPath returns the path at which to place tarPath
 func (te *Extractor) outputPath(tarPath string) string {
 	elems := strings.Split(tarPath, "/") // break into elems
 	elems = elems[1:]                    // remove original root

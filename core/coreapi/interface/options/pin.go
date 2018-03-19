@@ -63,9 +63,9 @@ func PinUpdateOptions(opts ...PinUpdateOption) (*PinUpdateSettings, error) {
 
 type PinOptions struct{}
 
-func (api *PinOptions) WithRecursive(recucsive bool) PinAddOption {
+func (api *PinOptions) WithRecursive(recursive bool) PinAddOption {
 	return func(settings *PinAddSettings) error {
-		settings.Recursive = recucsive
+		settings.Recursive = recursive
 		return nil
 	}
 }
