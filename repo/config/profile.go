@@ -53,6 +53,12 @@ var Profiles = map[string]Transformer{
 	"default-networking": func(c *Config) error {
 		c.Addresses = addressesConfig()
 
+		bootstrapPeers, err := DefaultBootstrapPeers()
+		if err != nil {
+			return err
+		}
+		c.Bootstrap = appendSingle(c.Bootstrap, BootstrapPeerStrings(bootstrapPeers))
+
 		c.Swarm.DisableNatPortMap = false
 		c.Discovery.MDNS.Enabled = true
 		return nil
